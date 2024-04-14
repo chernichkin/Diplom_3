@@ -65,3 +65,15 @@ class TestMainFunctions:
         main_page.check_login_main_btn_is_clickable()
         text_title = main_page.get_text_title()
         assert text_title == 'Соберите бургер'
+
+    @pytest.mark.parametrize(
+        'driver', ['driver_chrome', 'driver_firefox']
+    )
+    @allure.title('Проверка увеличения счетчика ингредиента при добавлении его в заказ')
+    def test_change_ingredient_counter(self, request, driver):
+        driver = request.getfixturevalue(driver)
+        main_page = MainPage(driver)
+        count_before = main_page.get_counter_sauce()
+        main_page.add_filling_to_order_basket()
+        count_after = main_page.get_counter_sauce()
+        assert int(count_after)-int(count_before) == 1

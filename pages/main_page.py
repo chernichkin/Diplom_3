@@ -68,3 +68,11 @@ class MainPage(BasePage):
     def click_on_close_popup_btn(self):
         self.click_on_element(MainPageLocators.x_popup_btn)
 
+    @allure.step('Добавление начинки в корзину')
+    def add_filling_to_order_basket(self):
+        self.drag_and_drop_element(MainPageLocators.sauce_02, MainPageLocators.burger_drop_place)
+
+    @allure.step('Получаем текст счетчика ингредиента')
+    def get_counter_sauce(self):
+        return self.get_text_element(MainPageLocators.counter_sauce)
+

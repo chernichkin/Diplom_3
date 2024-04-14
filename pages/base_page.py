@@ -57,3 +57,29 @@ class BasePage:
 
     def get_attribute_element(self, locator, attribute):
         return self.driver.find_element(*locator).get_attribute(attribute)
+
+    @allure.step('Перетаскивание элемента')
+    def drag_and_drop_element(self, locator_from, locator_to):
+        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(locator_from))
+        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(locator_to))
+        element_from = self.driver.find_element(*locator_from)
+        element_to = self.driver.find_element(*locator_to)
+        self.driver.execute_script("""
+                   var source = arguments[0];
+                   var target = arguments[1];
+                   var evt = document.createEvent("DragEvent");
+                   evt.initMouseEvent("dragstart", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                   source.dispatchEvent(evt);
+                   evt = document.createEvent("DragEvent");
+                   evt.initMouseEvent("dragenter", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                   target.dispatchEvent(evt);
+                   evt = document.createEvent("DragEvent");
+                   evt.initMouseEvent("dragover", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                   target.dispatchEvent(evt);
+                   evt = document.createEvent("DragEvent");
+                   evt.initMouseEvent("drop", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                   target.dispatchEvent(evt);
+                   evt = document.createEvent("DragEvent");
+                   evt.initMouseEvent("dragend", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                   source.dispatchEvent(evt);
+               """, element_from, element_to)

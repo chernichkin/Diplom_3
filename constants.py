@@ -8,6 +8,7 @@ class Data:
 
     email = 'yasaddada@yandex.ru'
 
+
 class Endpoints:
 
     URL = 'https://stellarburgers.nomoreparties.site/'
