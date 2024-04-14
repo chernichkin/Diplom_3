@@ -12,12 +12,13 @@ class TestPasswordRecovery:
     @pytest.mark.parametrize(
         'driver', ['driver_chrome', 'driver_firefox']
     )
-    def test_profile_login_is_visible_true(self, request, driver):
+    @allure.title('Проверка перехода на страницу восстановления пароля по кнопке "Восстановить пароль"')
+    def test_check_recovery_password_is_true(self, request, driver):
         driver = request.getfixturevalue(driver)
         main_page = MainPage(driver)
         profile_page = ProfilePage(driver)
         recovery_page = RecoveryPage(driver)
-        main_page.check_button_login_is_clickable()
+        main_page.check_button_profile_is_clickable()
         main_page.click_on_profile_button()
         profile_page.check_recovery_button_profile_is_clickable()
         profile_page.click_on_recovery_button_profile()
@@ -34,13 +35,14 @@ class TestPasswordRecovery:
             ['driver_firefox', 'sasasa@yandex.ru']
         ]
     )
-    def test_redirect_after_recovery_true(self, request, driver, email):
+    @allure.title('Проверка ввода почты и клик по кнопке «Восстановить»')
+    def test_redirect_after_recovery_is_true(self, request, driver, email):
         driver = request.getfixturevalue(driver)
         main_page = MainPage(driver)
         profile_page = ProfilePage(driver)
         recovery_page = RecoveryPage(driver)
         reset_pass_page = ResetPasswordPage(driver)
-        main_page.check_button_login_is_clickable()
+        main_page.check_button_profile_is_clickable()
         main_page.click_on_profile_button()
         profile_page.check_recovery_button_profile_is_clickable()
         profile_page.click_on_recovery_button_profile()
@@ -54,13 +56,14 @@ class TestPasswordRecovery:
     @pytest.mark.parametrize(
         'driver', ['driver_chrome', 'driver_firefox']
     )
-    def test_field_is_active_after_click_true(self, request, driver, email='amassma@gmail.com'):
+    @allure.title('Проверка что клик по кнопке показать/скрыть пароль делает поле активным')
+    def test_field_is_active_after_click_is_true(self, request, driver, email='amassma@gmail.com'):
         driver = request.getfixturevalue(driver)
         main_page = MainPage(driver)
         profile_page = ProfilePage(driver)
         recovery_page = RecoveryPage(driver)
         reset_pass_page = ResetPasswordPage(driver)
-        main_page.check_button_login_is_clickable()
+        main_page.check_button_profile_is_clickable()
         main_page.click_on_profile_button()
         profile_page.check_recovery_button_profile_is_clickable()
         profile_page.click_on_recovery_button_profile()
