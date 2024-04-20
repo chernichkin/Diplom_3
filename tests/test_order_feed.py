@@ -1,7 +1,6 @@
 import pytest
 import allure
 from pages.main_page import MainPage
-from pages.profile_page import ProfilePage
 from pages.order_feed_page import OrderFeedPage
 from helper import list_compare
 
@@ -27,17 +26,9 @@ class TestOrderFeed:
         'driver', ['driver_chrome', 'driver_firefox']
     )
     @allure.title('Проверка отображания заказов из раздела «История заказов» на странице «Лента заказов»')
-    def test_check_history_orders_into_orders_food_success(self, request, driver, create_user_and_delete):
+    def test_check_history_orders_into_orders_food_success(self, request, driver, create_user_login_and_delete):
         driver = request.getfixturevalue(driver)
-        email, password = create_user_and_delete
-        main_page = MainPage(driver)
-        profile_page = ProfilePage(driver)
-        main_page.check_button_profile_is_clickable()
-        main_page.click_on_profile_button()
-        profile_page.check_button_login_is_visible()
-        profile_page.set_email(email)
-        profile_page.set_password(password)
-        profile_page.click_on_login_btn()
+        main_page, profile_page = create_user_login_and_delete
         main_page.check_order_btn_is_visible()
         main_page.add_bun_to_order_basket()
         main_page.click_on_order_btn()
@@ -60,18 +51,10 @@ class TestOrderFeed:
         'driver', ['driver_chrome', 'driver_firefox']
     )
     @allure.title('Проверка увеличения счётчика "Выполнено за всё время" при создании заказа')
-    def test_check_increasing_counter_all_time_value_success(self, request, driver, create_user_and_delete):
+    def test_check_increasing_counter_all_time_value_success(self, request, driver, create_user_login_and_delete):
         driver = request.getfixturevalue(driver)
-        email, password = create_user_and_delete
-        main_page = MainPage(driver)
-        profile_page = ProfilePage(driver)
+        main_page, profile_page = create_user_login_and_delete
         order_page = OrderFeedPage(driver)
-        main_page.check_button_profile_is_clickable()
-        main_page.click_on_profile_button()
-        profile_page.check_button_login_is_visible()
-        profile_page.set_email(email)
-        profile_page.set_password(password)
-        profile_page.click_on_login_btn()
         main_page.check_order_btn_is_visible()
         main_page.click_on_order_feed_button()
         main_page.check_done_title_is_visible()
@@ -95,18 +78,10 @@ class TestOrderFeed:
         'driver', ['driver_chrome', 'driver_firefox']
     )
     @allure.title('Проверка что после оформления заказа его номер появляется в разделе "В работе"')
-    def test_check_increasing_counter_today_value_success(self, request, driver, create_user_and_delete):
+    def test_check_increasing_counter_today_value_success(self, request, driver, create_user_login_and_delete):
         driver = request.getfixturevalue(driver)
-        email, password = create_user_and_delete
-        main_page = MainPage(driver)
-        profile_page = ProfilePage(driver)
+        main_page, profile_page = create_user_login_and_delete
         order_page = OrderFeedPage(driver)
-        main_page.check_button_profile_is_clickable()
-        main_page.click_on_profile_button()
-        profile_page.check_button_login_is_visible()
-        profile_page.set_email(email)
-        profile_page.set_password(password)
-        profile_page.click_on_login_btn()
         main_page.check_order_btn_is_visible()
         main_page.add_bun_to_order_basket()
         main_page.click_on_order_btn()

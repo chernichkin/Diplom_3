@@ -47,10 +47,7 @@ def create_user_login_and_delete(request, driver, create_user_and_delete):
     profile_page.set_email(email)
     profile_page.set_password(password)
     profile_page.click_on_login_btn()
-    main_page.check_button_profile_is_clickable()
-    main_page.click_on_profile_button()
-    profile_page.check_btn_save_is_visible()
-    yield main_page, profile_page
+    return main_page, profile_page
 
 
 

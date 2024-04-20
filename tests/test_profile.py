@@ -49,6 +49,9 @@ class TestProfile:
     @allure.title('Проверка выхода из аккаунта')
     def test_exit_from_profile_true(self, driver, create_user_login_and_delete):
         main_page, profile_page = create_user_login_and_delete
+        main_page.check_button_profile_is_clickable()
+        main_page.click_on_profile_button()
+        profile_page.check_btn_save_is_visible()
         profile_page.check_exit_btn_is_clickable()
         profile_page.click_on_exit_btn_profile()
         profile_page.check_button_login_is_visible()
