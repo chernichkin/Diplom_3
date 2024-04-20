@@ -2,9 +2,6 @@ import pytest
 import allure
 from pages.main_page import MainPage
 from pages.profile_page import ProfilePage
-from pages.recovery_page import RecoveryPage
-from pages.reset_password_page import ResetPasswordPage
-from constants import Constants, Data
 
 
 class TestProfile:

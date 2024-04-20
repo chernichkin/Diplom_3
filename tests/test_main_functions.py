@@ -2,9 +2,6 @@ import pytest
 import allure
 from pages.main_page import MainPage
 from pages.profile_page import ProfilePage
-from pages.recovery_page import RecoveryPage
-from pages.reset_password_page import ResetPasswordPage
-from constants import Constants, Data
 
 
 class TestMainFunctions:
@@ -77,3 +74,25 @@ class TestMainFunctions:
         main_page.add_filling_to_order_basket()
         count_after = main_page.get_counter_sauce()
         assert int(count_after)-int(count_before) == 1
+
+    @pytest.mark.parametrize(
+        'driver', ['driver_chrome', 'driver_firefox']
+    )
+    @allure.title('Проверка что залогинный пользователь может оформить заказ')
+    def test_logined_user_can_order_true(self, request, driver, create_user_and_delete):
+        driver = request.getfixturevalue(driver)
+        email, password = create_user_and_delete
+        main_page = MainPage(driver)
+        profile_page = ProfilePage(driver)
+        main_page.check_button_profile_is_clickable()
+        main_page.click_on_profile_button()
+        profile_page.check_button_login_is_visible()
+        profile_page.set_email(email)
+        profile_page.set_password(password)
+        profile_page.click_on_login_btn()
+        main_page.check_order_btn_is_visible()
+        main_page.click_on_order_btn()
+        main_page.check_start_order_title_is_visible()
+        text_title = main_page.get_text_start_order_title()
+        assert text_title == 'идентификатор заказа'
+

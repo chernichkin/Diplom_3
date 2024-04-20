@@ -1,6 +1,4 @@
-import pytest
 import allure
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -17,8 +15,11 @@ class BasePage:
         WebDriverWait(self.driver, 8).until(
             expected_conditions.element_to_be_clickable(locator))
 
+    def wait_invisibility_element(self, locator):
+        return WebDriverWait(self.driver, 15).until(expected_conditions.invisibility_of_element_located(locator))
+
     def check_element_is_visable(self, locator):
-        WebDriverWait(self.driver, 5).until(
+        WebDriverWait(self.driver, 15).until(
             expected_conditions.visibility_of_element_located(locator))
 
     def scroll_to_element(self, locator):
@@ -60,8 +61,8 @@ class BasePage:
 
     @allure.step('Перетаскивание элемента')
     def drag_and_drop_element(self, locator_from, locator_to):
-        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(locator_from))
-        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(locator_to))
+        self.check_element_is_visable(locator_from)
+        self.check_element_is_visable(locator_to)
         element_from = self.driver.find_element(*locator_from)
         element_to = self.driver.find_element(*locator_to)
         self.driver.execute_script("""

@@ -1,12 +1,10 @@
 import pytest
 import requests
 from selenium import webdriver
-#from selenium.webdriver.chrome.service import Service as ChromeService
-#from webdriver_manager.chrome import ChromeDriverManager
-from faker import Faker
 from constants import Endpoints
 from pages.main_page import MainPage
 from pages.profile_page import ProfilePage
+from helper import generate_payloads
 
 
 @pytest.fixture()
@@ -29,16 +27,12 @@ def driver_firefox():
 
 @pytest.fixture(scope='function')
 def create_user_and_delete():
-    fake = Faker()
-    email = fake.email()
-    name = fake.name()
-    password = "111111"
-    payload = {'email': email, 'password': password, 'name': name}
-    response = requests.post(Endpoints.REGISTER, data=payload)
+    payload = generate_payloads()
+    response = requests.post(Endpoints.URL + Endpoints.REGISTER, data=payload)
     token = response.json()['accessToken']
-    yield email, password
+    yield payload['email'], payload['password']
     headers = {'Authorization': token}
-    requests.delete(Endpoints.USER, headers=headers)
+    requests.delete(Endpoints.URL + Endpoints.USER, headers=headers)
 
 
 @pytest.fixture(scope='function')

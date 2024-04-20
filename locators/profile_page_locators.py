@@ -10,4 +10,5 @@ class ProfilePageLocators:
     password_input = [By.XPATH, '//input[@name= "Пароль"]'] #Поле ввода пароля
     history_btn = [By.XPATH, './/a[@href= "/account/order-history"]'] #Кнопка истории
     exit_btn = [By.XPATH, '//button[text()="Выход"]'] #Кнопка Выйти
+    history_list_profile = [By.XPATH, ".//div[contains(@class,'OrderHistory_textBox')]/p[contains(@class,'text_type_digits')]"]
 

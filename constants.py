@@ -11,8 +11,8 @@ class Data:
 
 class Endpoints:
 
-    URL = 'https://stellarburgers.nomoreparties.site/'
-    REGISTER = 'https://stellarburgers.nomoreparties.site/api/auth/register'
-    USER = 'https://stellarburgers.nomoreparties.site/api/auth/user'
-    LOGIN = 'https://stellarburgers.nomoreparties.site/api/auth/login'
-    ORDER = 'https://stellarburgers.nomoreparties.site/api/orders'
+    URL = 'https://stellarburgers.nomoreparties.site'
+    REGISTER = '/api/auth/register'
+    USER = '/api/auth/user'
+    LOGIN = '/api/auth/login'
+    ORDER = '/api/orders'
