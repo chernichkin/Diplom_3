@@ -77,8 +77,36 @@ class TestOrderFeed:
     @pytest.mark.parametrize(
         'driver', ['driver_chrome', 'driver_firefox']
     )
-    @allure.title('Проверка что после оформления заказа его номер появляется в разделе "В работе"')
+    @allure.title('Проверка увеличения счётчика "Выполнено за сегодня" при создании заказа')
     def test_check_increasing_counter_today_value_success(self, request, driver, create_user_login_and_delete):
+        driver = request.getfixturevalue(driver)
+        main_page, profile_page = create_user_login_and_delete
+        order_page = OrderFeedPage(driver)
+        main_page.check_order_btn_is_visible()
+        main_page.click_on_order_feed_button()
+        main_page.check_done_title_is_visible()
+        current_count = order_page.get_count_today()
+        main_page.click_on_constructor_button()
+        main_page.check_order_btn_is_visible()
+        main_page.add_bun_to_order_basket()
+        main_page.click_on_order_btn()
+        main_page.check_x_btn_order_popup_is_clickable()
+        main_page.check_order_status_text_is_visible()
+        main_page.check_order_default_status_text_is_visible()
+        main_page.click_on_x_btn_order_popup()
+        main_page.check_order_btn_is_visible()
+        main_page.click_on_order_feed_button()
+        main_page.check_done_title_is_visible()
+        new_count = order_page.get_count_today()
+
+        assert (new_count - current_count) == 1
+
+
+    @pytest.mark.parametrize(
+        'driver', ['driver_chrome', 'driver_firefox']
+    )
+    @allure.title('Проверка что после оформления заказа его номер появляется в разделе "В работе"')
+    def test_check_work_now_order_success(self, request, driver, create_user_login_and_delete):
         driver = request.getfixturevalue(driver)
         main_page, profile_page = create_user_login_and_delete
         order_page = OrderFeedPage(driver)

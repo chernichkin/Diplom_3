@@ -28,7 +28,7 @@ class OrderFeedPage(BasePage):
     def get_count_all_time(self):
         return int(self.driver.find_element(*OrderPageLocators.all_time_counter_value).text)
 
-    @allure.step('Считываем значение счетчика "Выполнено за всё время"')
+    @allure.step('Считываем значение счетчика "Выполнено за сегодня"')
     def get_count_today(self):
         return int(self.driver.find_element(*OrderPageLocators.today_counter_value).text)
 
